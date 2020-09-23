@@ -10,47 +10,25 @@
   </head>
   <body>
     <div id="app">
-        <div class="nav-bar"></div>
-        <div class="cart">Cart({{ cart }})</div>
-        
-        <div class="product-display">
-          <div class="product-container">
-            <div class="product-image">
-              <!-- image goes here -->
-              <img v-bind:src="image" alt="">
-            </div>
-            <div class="product-info">
-              <h1>{{ title }}</h1>
-              <p v-if="inStock">In Stock</p>
-              <p v-else>Out of Stock</p>
+      <div class="nav-bar"></div>
 
-              <ul v-for="detail in details">
-                  <li>{{ detail }}</li>
-              </ul>
+      <div class="cart">Cart({{ cart.length }})</div>
+      <product-display 
+        :premium="premium" 
+        @add-to-cart="updateCart"
+        @remove-from-cart="removeById"> <!-- solution -->
+      </product-display>
+    </div>
 
-              <div v-for="(variant,index) in variants" 
-              v-bind:key='variant.id' 
-              @mouseover="updateVariant(index)"
-              class="color-circle"
-              v-bind:style='{ backgroundColor: variant.color }'>
-              {{ variant.color }}</div>
+    <!-- Import App -->
+    <script src="./app.js"></script>
 
-              <button class="button" 
-              v-on:click="addToCart"
-              v-bind:class="{ disabledButton: !inStock}"
-              v-bind:disabled="!inStock">
-              Add to Cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Import App -->
-      <script src="./app.js"></script>
-  
-      <!-- Mount App -->
-      <script>
-        const mountedApp = app.mount('#app')
-      </script>
+    <!-- Import Components -->
+    <script src="./componenets/ProductDisplay.js"></script>
+
+    <!-- Mount App -->
+    <script>
+      const mountedApp = app.mount('#app')
+    </script>
   </body>
 </html>
